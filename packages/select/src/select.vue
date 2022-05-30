@@ -77,7 +77,7 @@
       :autocomplete="autoComplete || autocomplete"
       :size="selectSize"
       :disabled="selectDisabled"
-      :readonly="readonly"
+      :readonly="true"
       :validate-event="false"
       :class="{ 'is-focus': visible }"
       :tabindex="(multiple && filterable) ? '-1' : null"
@@ -117,6 +117,9 @@
           ref="scrollbar"
           :class="{ 'is-empty': !allowCreate && query && filteredOptionsCount === 0 }"
           v-show="options.length > 0 && !loading">
+          <div class="select-search-input" >
+             <el-input v-if="filterable"  size="mini" v-model="searchValue" @input="handleQueryChange" placeholder="请输入内容"></el-input>
+          </div>
           <el-option
             :value="query"
             created
@@ -309,6 +312,7 @@
 
     data() {
       return {
+        searchValue: '',
         options: [],
         cachedOptions: [],
         createdLabel: null,
@@ -459,6 +463,7 @@
         }
       },
       handleQueryChange(val) {
+        console.log(val);
         if (this.previousQuery === val || this.isOnComposition) return;
         if (
           this.previousQuery === null &&
@@ -698,7 +703,7 @@
             this.handleQueryChange('');
             this.inputLength = 20;
           }
-          if (this.filterable) this.$refs.input.focus();
+          // if (this.filterable) this.$refs.input.focus();
         } else {
           this.$emit('input', option.value);
           this.emitChange(option.value);

@@ -23,7 +23,8 @@
           v-if="validateState === 'error' && showMessage && form.showMessage"
           name="error"
           :error="validateMessage">
-          <div
+          <span class="error-tip" :title="validateMessage"></span>
+          <!-- <div
             class="el-form-item__error"
             :class="{
               'el-form-item__error--inline': typeof inlineMessage === 'boolean'
@@ -32,7 +33,7 @@
             }"
           >
             {{validateMessage}}
-          </div>
+          </div> -->
         </slot>
       </transition>
     </div>
@@ -317,3 +318,16 @@
     }
   };
 </script>
+<style scoped>
+.error-tip{
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  background: url('../img/tips.png') no-repeat;
+  background-size: 100%;
+}
+  
+</style>
